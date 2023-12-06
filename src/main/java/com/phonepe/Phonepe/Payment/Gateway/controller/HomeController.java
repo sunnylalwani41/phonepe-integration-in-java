@@ -31,7 +31,7 @@ public class HomeController {
     public String processTransaction(@RequestBody Map<String, Object> map) throws IOException {
 
         OkHttpClient client = new OkHttpClient();
-        /*
+
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("merchantId", "PGTESTPAYUAT");
         requestBody.put("merchantTransactionId", "DA"+System.currentTimeMillis()+"On");
@@ -47,7 +47,7 @@ public class HomeController {
 
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonObject = objectMapper.writeValueAsString(requestBody);
-        */
+        /*
         String transaction = String.valueOf(System.currentTimeMillis());
         String jsonObject = "{\n" +
                 "  \"merchantId\": \"PGTESTPAYUAT\",\n" +
@@ -62,7 +62,7 @@ public class HomeController {
                 "    \"type\": \"PAY_PAGE\"\n" +
                 "  }\n" +
                 "}";
-
+        */
         String payload = create64EncodedPayLoad(jsonObject);
         String mainPayload = payload+"/pg/v1/pay"+SALTKEY;
         String sha256 = calculateSHA256(mainPayload);
