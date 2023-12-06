@@ -1,10 +1,10 @@
 package com.phonepe.Phonepe.Payment.Gateway.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -68,7 +68,7 @@ public class HomeController {
         String sha256 = calculateSHA256(mainPayload);
         String checksum = sha256+"###"+SALTINDEX;
 
-        com.squareup.okhttp.RequestBody requestBodyChecksum = com.squareup.okhttp.RequestBody.create(MediaType.parse("application/json"), checksum);
+        okhttp3.RequestBody requestBodyChecksum = okhttp3.RequestBody.create(MediaType.parse("application/json"), checksum);
 
         Request request = new Request.Builder()
                 .url("https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay")
@@ -78,8 +78,9 @@ public class HomeController {
                 .build();
 
         Response response = client.newCall(request).execute();
-        System.out.println(response.body().string());
-        return response.body().string();
+        String responseBody = response.body().string();
+        System.out.println(responseBody);
+        return responseBody;
     }
     public String create64EncodedPayLoad(String payload){
         return Base64.getEncoder().encodeToString(payload.getBytes(StandardCharsets.UTF_8));
